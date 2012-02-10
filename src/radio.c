@@ -142,7 +142,7 @@ int _msg_callback(int message, void *param, void *user_data)
 		case MM_MESSAGE_RADIO_SCAN_INFO: 
 			if( handle->user_cb[_RADIO_EVENT_TYPE_SCAN_INFO] )
 			{
-				((radio_scan_updated_cb)handle->user_cb[_RADIO_EVENT_TYPE_SCAN_INFO])(msg->radio_scan.frequency*100,handle->user_data[_RADIO_EVENT_TYPE_SCAN_INFO]);
+				((radio_scan_updated_cb)handle->user_cb[_RADIO_EVENT_TYPE_SCAN_INFO])(msg->radio_scan.frequency,handle->user_data[_RADIO_EVENT_TYPE_SCAN_INFO]);
 			}	
 			break;	
 		case MM_MESSAGE_RADIO_SCAN_STOP: 
@@ -160,7 +160,7 @@ int _msg_callback(int message, void *param, void *user_data)
 		case MM_MESSAGE_RADIO_SEEK_FINISH: 
 			if( handle->user_cb[_RADIO_EVENT_TYPE_SEEK_FINISH] )
 			{
-				((radio_seek_completed_cb)handle->user_cb[_RADIO_EVENT_TYPE_SEEK_FINISH])(msg->radio_scan.frequency*100, handle->user_data[_RADIO_EVENT_TYPE_SEEK_FINISH]);
+				((radio_seek_completed_cb)handle->user_cb[_RADIO_EVENT_TYPE_SEEK_FINISH])(msg->radio_scan.frequency, handle->user_data[_RADIO_EVENT_TYPE_SEEK_FINISH]);
 			}	
 			break;
 		case MM_MESSAGE_STATE_INTERRUPTED: 
@@ -374,7 +374,7 @@ int radio_set_frequency(radio_h radio, int frequency)
 		LOGE("[%s] RADIO_ERROR_INVALID_PARAMETER(0x%08x) : Out of range (87500 ~ 108000)" ,__FUNCTION__,RADIO_ERROR_INVALID_PARAMETER);
 		return RADIO_ERROR_INVALID_PARAMETER;
 	}
-	int freq= frequency/100;
+	int freq= frequency;
 	radio_s * handle = (radio_s *) radio;
 	int ret = mm_radio_set_frequency(handle->mm_handle, freq);
 	if(ret != MM_ERROR_NONE)
@@ -400,7 +400,7 @@ int radio_get_frequency(radio_h radio, int *frequency)
 	}
 	else
 	{
-		*frequency = freq*100; 
+		*frequency = freq; 
 		return RADIO_ERROR_NONE;
 	}
 }	
