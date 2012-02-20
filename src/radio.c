@@ -47,7 +47,7 @@
 /*
 * Internal Implementation
 */
-int _convert_error_code(int code, char *func_name)
+static int __convert_error_code(int code, char *func_name)
 {
 	int ret = RADIO_ERROR_NONE;
 	char* msg="RADIO_ERROR_NONE";
@@ -90,7 +90,7 @@ int _convert_error_code(int code, char *func_name)
 	return ret;	
 }
 
-radio_state_e _convert_radio_state(MMRadioStateType state)
+static radio_state_e __convert_radio_state(MMRadioStateType state)
 {
 	int converted_state = RADIO_STATE_READY;
 	switch(state)
@@ -111,7 +111,7 @@ radio_state_e _convert_radio_state(MMRadioStateType state)
 	return converted_state;
 }
 
-int _set_callback(_radio_event_e type, radio_h radio, void* callback, void *user_data)
+static int __set_callback(_radio_event_e type, radio_h radio, void* callback, void *user_data)
 {
 	RADIO_INSTANCE_CHECK(radio);
 	RADIO_NULL_ARG_CHECK(callback);
@@ -122,7 +122,7 @@ int _set_callback(_radio_event_e type, radio_h radio, void* callback, void *user
 	return RADIO_ERROR_NONE; 
 }
 
-int _unset_callback(_radio_event_e type, radio_h radio)
+static int __unset_callback(_radio_event_e type, radio_h radio)
 {
 	RADIO_INSTANCE_CHECK(radio);
 	radio_s * handle = (radio_s *) radio; 
@@ -132,7 +132,7 @@ int _unset_callback(_radio_event_e type, radio_h radio)
 	return RADIO_ERROR_NONE; 
 }
 
-int _msg_callback(int message, void *param, void *user_data)
+static int __msg_callback(int message, void *param, void *user_data)
 {
 	radio_s * handle = (radio_s*)user_data;
 	MMMessageParamType *msg = (MMMessageParamType*)param;
@@ -170,14 +170,14 @@ int _msg_callback(int message, void *param, void *user_data)
 			}
 			break;
 		case  MM_MESSAGE_ERROR: 
-				_convert_error_code(msg->code,(char*)__FUNCTION__);
+				__convert_error_code(msg->code,(char*)__FUNCTION__);
 			break;
 		case MM_MESSAGE_RADIO_SCAN_START: 
 			LOGI("[%s] Scan Started");
 			break;
 		case  MM_MESSAGE_STATE_CHANGED:	
-			handle->state = _convert_radio_state(msg->state.current);
-			LOGI("[%s] State Changed --- from : %d , to : %d" ,__FUNCTION__,  _convert_radio_state(msg->state.previous), handle->state);
+			handle->state = __convert_radio_state(msg->state.current);
+			LOGI("[%s] State Changed --- from : %d , to : %d" ,__FUNCTION__,  __convert_radio_state(msg->state.previous), handle->state);
 			break;
 		case MM_MESSAGE_RADIO_SEEK_START:
 			LOGI("[%s] Seek Started", __FUNCTION__);
@@ -216,7 +216,7 @@ int radio_create(radio_h *radio)
 	{
 		*radio = (radio_h)handle;
 		
-		ret = mm_radio_set_message_callback(handle->mm_handle, _msg_callback, (void*)handle);
+		ret = mm_radio_set_message_callback(handle->mm_handle, __msg_callback, (void*)handle);
 		if(ret != MM_ERROR_NONE)
 		{
 			LOGW("[%s] Failed to set message callback function (0x%x)" ,__FUNCTION__, ret);
@@ -224,7 +224,7 @@ int radio_create(radio_h *radio)
 		ret = mm_radio_realize(handle->mm_handle);
 		if(ret != MM_ERROR_NONE)
 		{
-			return _convert_error_code(ret,(char*)__FUNCTION__);
+			return __convert_error_code(ret,(char*)__FUNCTION__);
 		}
 		handle->state = RADIO_STATE_READY;
 		handle->mute = FALSE;
@@ -268,11 +268,11 @@ int  radio_get_state(radio_h radio, radio_state_e *state)
 	if(ret != MM_ERROR_NONE)
 	{
 		*state = handle->state;
-		return _convert_error_code(ret,(char*)__FUNCTION__);
+		return __convert_error_code(ret,(char*)__FUNCTION__);
 	}
 	else
 	{
-		handle->state  = _convert_radio_state(currentStat);
+		handle->state  = __convert_radio_state(currentStat);
 		*state = handle->state;
 		return RADIO_ERROR_NONE;
 	}
@@ -287,7 +287,7 @@ int radio_start(radio_h radio)
 	int ret = mm_radio_start(handle->mm_handle);
 	if(ret != MM_ERROR_NONE)
 	{
-		return _convert_error_code(ret,(char*)__FUNCTION__);
+		return __convert_error_code(ret,(char*)__FUNCTION__);
 	}
 	else
 	{
@@ -305,7 +305,7 @@ int radio_stop(radio_h radio)
 	int ret = mm_radio_stop(handle->mm_handle);
 	if(ret != MM_ERROR_NONE)
 	{
-		return _convert_error_code(ret,(char*)__FUNCTION__);
+		return __convert_error_code(ret,(char*)__FUNCTION__);
 	}
 	else
 	{
@@ -322,17 +322,17 @@ int radio_seek_up(radio_h radio,radio_seek_completed_cb callback, void *user_dat
 	
 	if(callback!=NULL)
 	{
-		_set_callback(_RADIO_EVENT_TYPE_SEEK_FINISH,radio,callback,user_data);
+		__set_callback(_RADIO_EVENT_TYPE_SEEK_FINISH,radio,callback,user_data);
 	}
 	else
 	{
-		_unset_callback(_RADIO_EVENT_TYPE_SEEK_FINISH,radio);
+		__unset_callback(_RADIO_EVENT_TYPE_SEEK_FINISH,radio);
 	}
 	
 	int ret = mm_radio_seek(handle->mm_handle, MM_RADIO_SEEK_UP);
 	if(ret != MM_ERROR_NONE)
 	{
-		return _convert_error_code(ret,(char*)__FUNCTION__);
+		return __convert_error_code(ret,(char*)__FUNCTION__);
 	}
 	else
 	{
@@ -348,17 +348,17 @@ int radio_seek_down(radio_h radio,radio_seek_completed_cb callback, void *user_d
 	
 	if(callback!=NULL)
 	{
-		_set_callback(_RADIO_EVENT_TYPE_SEEK_FINISH,radio,callback,user_data);
+		__set_callback(_RADIO_EVENT_TYPE_SEEK_FINISH,radio,callback,user_data);
 	}
 	else
 	{
-		_unset_callback(_RADIO_EVENT_TYPE_SEEK_FINISH,radio);
+		__unset_callback(_RADIO_EVENT_TYPE_SEEK_FINISH,radio);
 	}
 	
 	int ret = mm_radio_seek(handle->mm_handle, MM_RADIO_SEEK_DOWN);
 	if(ret != MM_ERROR_NONE)
 	{
-		return _convert_error_code(ret,(char*)__FUNCTION__);
+		return __convert_error_code(ret,(char*)__FUNCTION__);
 	}
 	else
 	{
@@ -379,7 +379,7 @@ int radio_set_frequency(radio_h radio, int frequency)
 	int ret = mm_radio_set_frequency(handle->mm_handle, freq);
 	if(ret != MM_ERROR_NONE)
 	{
-		return _convert_error_code(ret,(char*)__FUNCTION__);
+		return __convert_error_code(ret,(char*)__FUNCTION__);
 	}
 	else
 	{
@@ -396,7 +396,7 @@ int radio_get_frequency(radio_h radio, int *frequency)
 	int ret = mm_radio_get_frequency(handle->mm_handle, &freq);
 	if(ret != MM_ERROR_NONE)
 	{
-		return _convert_error_code(ret,(char*)__FUNCTION__);
+		return __convert_error_code(ret,(char*)__FUNCTION__);
 	}
 	else
 	{
@@ -413,17 +413,17 @@ int radio_scan_start(radio_h radio, radio_scan_updated_cb callback, void *user_d
 
 	if(callback!=NULL)
 	{
-		_set_callback(_RADIO_EVENT_TYPE_SCAN_INFO,radio,callback,user_data);
+		__set_callback(_RADIO_EVENT_TYPE_SCAN_INFO,radio,callback,user_data);
 	}
 	else
 	{
-		_unset_callback(_RADIO_EVENT_TYPE_SCAN_INFO,radio);
+		__unset_callback(_RADIO_EVENT_TYPE_SCAN_INFO,radio);
 	}
 	
 	int ret = mm_radio_scan_start(handle->mm_handle);
 	if(ret != MM_ERROR_NONE)
 	{
-		return _convert_error_code(ret,(char*)__FUNCTION__);
+		return __convert_error_code(ret,(char*)__FUNCTION__);
 	}
 	else
 	{
@@ -440,17 +440,17 @@ int radio_scan_stop(radio_h radio, radio_scan_stopped_cb callback, void *user_da
 
 	if(callback!=NULL)
 	{
-		_set_callback(_RADIO_EVENT_TYPE_SCAN_STOP,radio,callback,user_data);
+		__set_callback(_RADIO_EVENT_TYPE_SCAN_STOP,radio,callback,user_data);
 	}
 	else
 	{
-		_unset_callback(_RADIO_EVENT_TYPE_SCAN_STOP,radio);
+		__unset_callback(_RADIO_EVENT_TYPE_SCAN_STOP,radio);
 	}
 	
 	int ret = mm_radio_scan_stop(handle->mm_handle);
 	if(ret != MM_ERROR_NONE)
 	{
-		return _convert_error_code(ret,(char*)__FUNCTION__);
+		return __convert_error_code(ret,(char*)__FUNCTION__);
 	}
 	else
 	{
@@ -468,7 +468,7 @@ int radio_set_mute(radio_h radio, bool muted)
 	int ret = mm_radio_set_mute(handle->mm_handle, muted);
 	if(ret != MM_ERROR_NONE)
 	{
-		return _convert_error_code(ret,(char*)__FUNCTION__);
+		return __convert_error_code(ret,(char*)__FUNCTION__);
 	}
 	else
 	{
@@ -488,20 +488,20 @@ int radio_is_muted(radio_h radio, bool *muted)
 
 int radio_set_scan_completed_cb(radio_h radio, radio_scan_completed_cb callback, void *user_data)
 {
-	return _set_callback(_RADIO_EVENT_TYPE_SCAN_FINISH,radio,callback,user_data);
+	return __set_callback(_RADIO_EVENT_TYPE_SCAN_FINISH,radio,callback,user_data);
 }
 
 int radio_unset_scan_completed_cb(radio_h radio)
 {
-	return _unset_callback(_RADIO_EVENT_TYPE_SCAN_FINISH,radio);
+	return __unset_callback(_RADIO_EVENT_TYPE_SCAN_FINISH,radio);
 }
 
 int radio_set_interrupted_cb(radio_h radio, radio_interrupted_cb callback, void *user_data)
 {
-	return _set_callback(_RADIO_EVENT_TYPE_INTERRUPT,radio,callback,user_data);
+	return __set_callback(_RADIO_EVENT_TYPE_INTERRUPT,radio,callback,user_data);
 }
 
 int radio_unset_interrupted_cb(radio_h radio)
 {
-	return _unset_callback(_RADIO_EVENT_TYPE_INTERRUPT,radio);
+	return __unset_callback(_RADIO_EVENT_TYPE_INTERRUPT,radio);
 }
