@@ -40,9 +40,6 @@ typedef struct _radio_s{
 	bool mute;
 } radio_s;
 
-int mm_radio_msg_callback(int message, void *param, void *user_data);
-
-
 #ifdef __cplusplus
 }
 #endif
