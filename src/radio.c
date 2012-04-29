@@ -405,6 +405,24 @@ int radio_get_frequency(radio_h radio, int *frequency)
 	}
 }	
 
+int radio_get_signal_strength(radio_h radio, int *strength)
+{
+	RADIO_INSTANCE_CHECK(radio);
+	radio_s * handle = (radio_s *) radio;
+
+	int _strength;
+	int ret = mm_radio_get_signal_strength(handle->mm_handle, &_strength);
+	if(ret != MM_ERROR_NONE)
+	{
+		return __convert_error_code(ret,(char*)__FUNCTION__);
+	}
+	else
+	{
+		*strength = _strength;
+		return RADIO_ERROR_NONE;
+	}
+}
+
 int radio_scan_start(radio_h radio, radio_scan_updated_cb callback, void *user_data)
 {
 	RADIO_INSTANCE_CHECK(radio);

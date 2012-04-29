@@ -1,35 +1,36 @@
 Name:       capi-media-radio
 Summary:    A Radio library in Tizen Native API
 Version:    0.1.0
-Release:    1.1
+Release:    8
 Group:      TO_BE/FILLED_IN
 License:    Apache-2.0
 Source0:    %{name}-%{version}.tar.gz
-BuildRequires:  cmake
+BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(dlog)
+BuildRequires:  pkgconfig(vconf)
 BuildRequires:  pkgconfig(mm-radio)
 BuildRequires:  pkgconfig(capi-base-common)
-Requires(post): /sbin/ldconfig
-Requires(postun): /sbin/ldconfig
+BuildRequires:  cmake
+BuildRequires:  gettext-devel
 
 %description
+A Radio library in Tizen Native API
 
 
-%package devel
-Summary:  A Radio library in Tizen Native API (Development)
-Group:    TO_BE/FILLED_IN
-Requires: %{name} = %{version}-%{release}
+%package devel 
+Summary:    A Radio library in Tizen Native API (Developement)
+Group:      TO_BE_FILLED 
+Requires:   %{name} = %{version}-%{release}
 
 %description devel
+A Radio library in Tizen Native API (Developement)
 
 %prep
 %setup -q
 
-
 %build
-FULLVER=%{version}
-MAJORVER=`echo ${FULLVER} | cut -d '.' -f 1`
-cmake . -DCMAKE_INSTALL_PREFIX=/usr -DFULLVER=${FULLVER} -DMAJORVER=${MAJORVER}
+MAJORVER=`echo %{version} | awk 'BEGIN {FS="."}{print $1}'`
+cmake . -DCMAKE_INSTALL_PREFIX=/usr -DFULLVER=%{version} -DMAJORVER=${MAJORVER}
 
 
 make %{?jobs:-j%jobs}
@@ -38,16 +39,17 @@ make %{?jobs:-j%jobs}
 rm -rf %{buildroot}
 %make_install
 
-%post -p /sbin/ldconfig
+%post
 
-%postun -p /sbin/ldconfig
+%postun
 
 
 %files
-%{_libdir}/libcapi-media-radio.so*
+%defattr(-,root,root,-)
+/usr/lib/libcapi-media-radio.so.*
 
-%files devel
-%{_includedir}/media/*.h
-%{_libdir}/pkgconfig/*.pc
-
-
+%files devel 
+%defattr(-,root,root,-)
+/usr/include/media/radio.h
+/usr/lib/pkgconfig/capi-media-radio.pc
+/usr/lib/libcapi-media-radio.so

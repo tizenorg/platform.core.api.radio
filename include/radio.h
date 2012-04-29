@@ -245,6 +245,17 @@ int radio_set_frequency(radio_h radio, int frequency);
 int radio_get_frequency(radio_h radio, int *frequency);
 
 /**
+ * @brief Gets the current signal strength of radio.
+ * @param[in]   radio The handle to radio
+ * @param[out]  strength The current signal strength [0 ~ 65535] (dbuV)
+ * @return 0 on success, otherwise a negative error value.
+ * @retval #RADIO_ERROR_NONE Successful
+ * @retval #RADIO_ERROR_INVALID_PARAMETER Invalid parameter
+ * @retval #RADIO_ERROR_INVALID_OPERATION Invalid operation
+ */
+int radio_get_signal_strength(radio_h radio, int *strength);
+
+/**
  * @brief Starts scanning radio signals, asynchronously
  *
  * @param[in]   radio The handle to radio

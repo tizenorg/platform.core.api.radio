@@ -1,3 +1,9 @@
+capi-media-radio (0.1.0-8) unstable; urgency=low
+
+  * Support to get signal strength 
+
+ -- Kangho Hur <kangho.hur@samsung.com>  Mon, 19 Mar 2012 17:44:22 +0900
+
 capi-media-radio (0.1.0-7) unstable; urgency=low
 
   * Use 'static' to local function which is limited to the current source file. 

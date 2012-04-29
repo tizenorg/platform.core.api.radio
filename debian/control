@@ -7,12 +7,12 @@ Build-Depends: debhelper (>= 5), dlog-dev, libmm-radio-dev, capi-base-common-dev
 
 Package: capi-media-radio
 Architecture: any
-Depends: ${shilbs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: A Radio library in Tizen Native API
 
 Package: capi-media-radio-dev
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, capi-media-radio (= ${Source-Version}), dlog-dev, libmm-radio-dev, capi-base-common-dev
+Depends: ${shlibs:Depends}, ${misc:Depends}, capi-media-radio (= ${Source-Version}), capi-base-common-dev
 Description: A Radio library in Tizen Native API (DEV)
 
 Package: capi-media-radio-dbg
