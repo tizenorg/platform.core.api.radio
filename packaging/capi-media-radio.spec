@@ -5,6 +5,7 @@ Release:    8
 Group:      TO_BE/FILLED_IN
 License:    Apache-2.0
 Source0:    %{name}-%{version}.tar.gz
+Source1001: packaging/capi-media-radio.manifest 
 BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(vconf)
@@ -29,6 +30,7 @@ A Radio library in Tizen Native API (Developement)
 %setup -q
 
 %build
+cp %{SOURCE1001} .
 MAJORVER=`echo %{version} | awk 'BEGIN {FS="."}{print $1}'`
 cmake . -DCMAKE_INSTALL_PREFIX=/usr -DFULLVER=%{version} -DMAJORVER=${MAJORVER}
 
@@ -45,10 +47,12 @@ rm -rf %{buildroot}
 
 
 %files
+%manifest capi-media-radio.manifest
 %defattr(-,root,root,-)
 /usr/lib/libcapi-media-radio.so.*
 
 %files devel 
+%manifest capi-media-radio.manifest
 %defattr(-,root,root,-)
 /usr/include/media/radio.h
 /usr/lib/pkgconfig/capi-media-radio.pc
