@@ -1,29 +1,71 @@
+capi-media-radio (0.1.0-9) unstable; urgency=low
+
+  * fix build dependancy
+  * Git: slp-source.sec.samsung.net:slp/api/radio
+  * Tag: capi-media-radio_0.1.0-9
+
+ -- Kangho Hur <kangho.hur@samsung.com>  Mon, 30 Jul 2012 15:52:08 +0900
+
 capi-media-radio (0.1.0-8) unstable; urgency=low
 
   * Support to get signal strength 
-
- -- Kangho Hur <kangho.hur@samsung.com>  Mon, 19 Mar 2012 17:44:22 +0900
+  * Git: slp-source.sec.samsung.net:slp/api/radio
+  * Tag: capi-media-radio_0.1.0-8
+ 
+ -- Kangho Hur <kangho.hur@samsung.com>  Thu, 08 Mar 2012 15:49:04 +0900
 
 capi-media-radio (0.1.0-7) unstable; urgency=low
 
-  * Use 'static' to local function which is limited to the current source file. 
+  * Use 'static' to local function which is limited to the current source file.
+  * Git: slp-source.sec.samsung.net:slp/api/radio
+  * Tag: capi-media-radio_0.1.0-7 
 
- -- Kangho Hur <kangho.hur@samsung.com>  Tue, 21 Feb 2012 10:25:39 +0900
+ -- Kangho Hur <kangho.hur@samsung.com>  Tue, 21 Feb 2012 10:09:32 +0900
 
 capi-media-radio (0.1.0-6) unstable; urgency=low
 
-  * Apply the SOVERSION 
+  * Apply the SOVERSION
+  * Git: slp-source.sec.samsung.net:slp/api/radio
+  * Tag: capi-media-radio_0.1.0-6
 
- -- Kangho Hur <kangho.hur@samsung.com>  Tue, 14 Feb 2012 18:22:03 +0900
+ -- Kangho Hur <kangho.hur@samsung.com>  Tue, 14 Feb 2012 17:14:04 +0900
 
 capi-media-radio (0.1.0-5) unstable; urgency=low
 
-  * Apply the change of frequency unit 
+  * Apply the change of frequency unit
+  * Git: slp-source.sec.samsung.net:slp/api/radio
+  * Tag: capi-media-radio_0.1.0-5
 
- -- Kangho Hur <kangho.hur@samsung.com>  Fri, 10 Feb 2012 15:21:06 +0900
+ -- Kangho Hur <kangho.hur@samsung.com>  Mon, 16 Jan 2012 20:24:09 +0900
 
 capi-media-radio (0.1.0-4) unstable; urgency=low
 
-  * Initial release.
+  * Changes the value of ERROR_NONE
+  * Git: slp-source.sec.samsung.net:slp/api/radio
+  * Tag: capi-media-radio_0.1.0-4 
 
- -- Kangho Hur <kangho.hur@samsung.com> Wed, 07 Dec 2011 12:57:07 +0900
+ -- Kangho Hur <kangho.hur@samsung.com>  Mon, 05 Dec 2011 11:27:59 +0900
+
+capi-media-radio (0.1.0-3) unstable; urgency=low
+
+  * Remove the unneccesary error code
+  * Git: slp-source.sec.samsung.net:slp/api/radio
+  * Tag: capi-media-radio_0.1.0-3
+
+ -- Kangho Hur <kangho.hur@samsung.com>  Wed, 30 Nov 2011 15:38:16 +0900
+
+capi-media-radio (0.1.0-2) unstable; urgency=low
+
+  * Apply the Tizen
+  * Git: slp-source.sec.samsung.net:slp/api/radio
+  * Tag: capi-media-radio_0.1.0-2
+
+ -- Kangho Hur <kangho.hur@samsung.com>  Wed, 23 Nov 2011 15:46:33 +0900
+
+capi-media-radio (0.1.0-1) unstable; urgency=low
+
+  * Initial Release
+  * Git: slp-source.sec.samsung.net:slp/api/radio
+  * Tag: capi-media-radio_0.1.0-1
+
+ -- Kangho Hur <kangho.hur@samsung.com>  Wed, 09 Nov 2011 13:50:55 +0900

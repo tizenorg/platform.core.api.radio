@@ -1,9 +1,10 @@
+#sbs-git:slp/api/radio capi-media-radio 0.1.0 59dddd8ea3de373c44c66ce2a298ca81240305a8
 Name:       capi-media-radio
 Summary:    A Radio library in Tizen Native API
-Version:    0.1.0
-Release:    8
-Group:      TO_BE/FILLED_IN
-License:    Apache-2.0
+Version: 0.1.0
+Release:    9
+Group:      TO_BE_FILLED
+License:    TO_BE_FILLED
 Source0:    %{name}-%{version}.tar.gz
 BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(dlog)
