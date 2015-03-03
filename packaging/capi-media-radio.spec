@@ -11,6 +11,7 @@ BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(vconf)
 BuildRequires:  pkgconfig(mm-radio)
 BuildRequires:  pkgconfig(capi-base-common)
+BuildRequires:  pkgconfig(capi-system-info)
 BuildRequires:  cmake
 BuildRequires:  gettext-devel
 
