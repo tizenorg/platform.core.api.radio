@@ -73,6 +73,7 @@ static int __convert_error_code(int code, char *func_name)
 			msg = "RADIO_ERROR_INVALID_STATE";
 			break;
 		case MM_ERROR_COMMON_INVALID_ARGUMENT:
+		case MM_ERROR_INVALID_ARGUMENT:
 			ret = RADIO_ERROR_INVALID_PARAMETER;
 			msg = "RADIO_ERROR_INVALID_PARAMETER";
 			break;
@@ -91,6 +92,10 @@ static int __convert_error_code(int code, char *func_name)
 		case  MM_ERROR_RADIO_DEVICE_NOT_FOUND:
 			ret = RADIO_ERROR_NOT_SUPPORTED;
 			msg = "RADIO_ERROR_NOT_SUPPORTED";
+			break;
+		case MM_ERROR_RADIO_NO_ANTENNA:
+			ret = RADIO_ERROR_NO_ANTENNA;
+			msg = "RADIO_ERROR_NO_ANTENNA";
 			break;
 		case  MM_ERROR_RADIO_DEVICE_NOT_OPENED:
 		default :
@@ -647,3 +652,52 @@ int radio_unset_interrupted_cb(radio_h radio)
 	RADIO_SUPPORT_CHECK(__radio_check_system_info_feature_supported());
 	return __unset_callback(_RADIO_EVENT_TYPE_INTERRUPT,radio);
 }
+
+
+int radio_get_frequency_range(radio_h radio, int *min_freq, int *max_freq)
+{
+	LOGI("[%s] Enter", __func__);
+	RADIO_SUPPORT_CHECK(__radio_check_system_info_feature_supported());
+	RADIO_INSTANCE_CHECK(radio);
+	RADIO_NULL_ARG_CHECK(min_freq);
+	RADIO_NULL_ARG_CHECK(max_freq);
+	radio_s * handle = (radio_s *) radio;
+
+	unsigned int min = 0;
+	unsigned int max = 0;
+
+	int ret = mm_radio_get_region_frequency_range(handle->mm_handle, &min, &max);
+	if(ret != MM_ERROR_NONE)
+	{
+		return __convert_error_code(ret,(char*)__FUNCTION__);
+	}
+	else
+	{
+		*min_freq = min;
+		*max_freq = max;
+		return RADIO_ERROR_NONE;
+	}
+}
+
+int radio_get_channel_spacing(radio_h radio, int *channel_spacing)
+{
+	LOGI("[%s] Enter", __func__);
+	RADIO_SUPPORT_CHECK(__radio_check_system_info_feature_supported());
+	RADIO_INSTANCE_CHECK(radio);
+
+	radio_s * handle = (radio_s *) radio;
+
+	int ret = mm_radio_get_channel_spacing(handle->mm_handle, channel_spacing);
+
+	if(ret != MM_ERROR_NONE)
+	{
+		return __convert_error_code(ret,(char*)__FUNCTION__);
+	}
+	else
+	{
+		return RADIO_ERROR_NONE;
+	}
+}
+
+
+

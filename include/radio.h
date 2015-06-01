@@ -26,7 +26,7 @@ extern "C" {
 /**
  * @file radio.h
  * @brief This file contains the radio API.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  */
 
 /**
@@ -36,13 +36,13 @@ extern "C" {
 
 /**
  * @brief Radio type handle.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  */
 typedef struct radio_s *radio_h;
 
 /**
  * @brief Enumeration of radio state.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  */
 typedef enum
 {
@@ -53,7 +53,7 @@ typedef enum
 
 /**
  * @brief Enumeration of error codes for the radio.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  */
 typedef enum
 {
@@ -63,13 +63,14 @@ typedef enum
 	RADIO_ERROR_INVALID_OPERATION	= TIZEN_ERROR_INVALID_OPERATION,			/**< Invalid operation */
 	RADIO_ERROR_INVALID_STATE	    = TIZEN_ERROR_RADIO | 0x01	,					/**< Invalid state */
 	RADIO_ERROR_SOUND_POLICY	    = TIZEN_ERROR_RADIO | 0x02	,					/**< Sound policy error */
+	RADIO_ERROR_NO_ANTENNA			= TIZEN_ERROR_RADIO | 0x03 ,				 /**< No Antenna error (Since 2.4) */
 	RADIO_ERROR_PERMISSION_DENIED   = TIZEN_ERROR_PERMISSION_DENIED,			/**< Permission denied */
 	RADIO_ERROR_NOT_SUPPORTED   = TIZEN_ERROR_NOT_SUPPORTED,					/**< Not supported */
 } radio_error_e;
 
 /**
  * @brief Enumeration of radio interrupted type.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  */
 typedef enum
 {
@@ -86,7 +87,7 @@ typedef enum
 
 /**
  * @brief  Called when the scan information is updated.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in] frequency The tuned radio frequency [87500 ~ 108000] (kHz)
  * @param[in] user_data  The user data passed from the callback registration function
  * @pre It will be invoked by radio_scan_start().
@@ -96,7 +97,7 @@ typedef void (*radio_scan_updated_cb)(int frequency, void *user_data);
 
 /**
  * @brief  Called when the radio scan is stopped.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in] user_data  The user data passed from the callback registration function
  * @pre It will be invoked when the scan is stopped by radio_scan_stop().
  * @see radio_scan_stop()
@@ -105,7 +106,7 @@ typedef void (*radio_scan_stopped_cb)(void *user_data);
 
 /**
  * @brief  Called when the radio scan is completed.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in] user_data  The user data passed from the callback registration function
  * @pre It will be invoked when the scan is completed by registering this callback using radio_set_scan_completed_cb().
  * @see radio_scan_start()
@@ -116,7 +117,7 @@ typedef void (*radio_scan_completed_cb)(void *user_data);
 
 /**
  * @brief  Called when the radio seek is completed.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in] frequency The current frequency [87500 ~ 108000] (kHz)
  * @param[in] user_data  The user data passed from the callback registration function
  * @pre It will be invoked when the radio seek is completed by registering this callback using radio_seek_up() or radio_seek_down().
@@ -127,7 +128,7 @@ typedef void (*radio_seek_completed_cb)(int frequency, void *user_data);
 
 /**
  * @brief  Called when the radio is interrupted.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in]	error_code	The interrupted error code
  * @param[in]	user_data	The user data passed from the callback registration function
  * @see radio_set_interrupted_cb()
@@ -137,7 +138,7 @@ typedef void (*radio_interrupted_cb)(radio_interrupted_code_e code, void *user_d
 
 /**
  * @brief Creates a radio handle.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @remarks You must release @a radio using radio_destroy().
  * @param[out]  radio  A new handle to radio
  * @retval #RADIO_ERROR_NONE Successful
@@ -151,7 +152,7 @@ int radio_create(radio_h *radio);
 
 /**
  * @brief Destroys the radio handle and releases all its resources.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @remarks To completely shutdown the radio operation, call this function with a valid radio handle.
  *
  * @param[in]		radio The handle to radio to be destroyed
@@ -167,7 +168,7 @@ int radio_destroy(radio_h radio);
 
 /**
  * @brief Gets the radio's current state.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in]   radio	The handle to radio
  * @param[out]  state	The current state of the radio
  * @return @c 0 on success,
@@ -180,7 +181,7 @@ int  radio_get_state(radio_h radio, radio_state_e *state);
 
 /**
  * @brief Starts playing the radio.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in]   radio The handle to radio
  * @return @c 0 on success,
  *         otherwise a negative error value
@@ -189,6 +190,7 @@ int  radio_get_state(radio_h radio, radio_state_e *state);
  * @retval #RADIO_ERROR_INVALID_STATE Invalid radio state
  * @retval #RADIO_ERROR_SOUND_POLICY Sound policy error
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
+ * @retval #RADIO_ERROR_NO_ANTENNA No Antenna error
  * @pre The radio state must be set to #RADIO_STATE_READY by calling radio_create().
  * @post The radio state will be #RADIO_STATE_PLAYING.
  * @see radio_stop()
@@ -197,7 +199,7 @@ int radio_start(radio_h radio);
 
 /**
  * @brief Stops playing the radio.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in]   radio The handle to radio
  * @return @c 0 on success,
  *         otherwise a negative error value
@@ -214,7 +216,7 @@ int radio_stop(radio_h radio);
 
 /**
  * @brief Seeks up the effective frequency of the radio, asynchronously.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in]   radio The handle to radio
  * @param[in] callback	The callback function to register
  * @param[in] user_data	The user data to be passed to the callback function
@@ -233,7 +235,7 @@ int radio_seek_up(radio_h radio,radio_seek_completed_cb callback, void *user_dat
 
 /**
  * @brief Seeks down the effective frequency of the radio, asynchronously.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in]   radio The handle to radio
  * @param[in] callback	The callback function to register
  * @param[in] user_data	The user data to be passed to the callback function
@@ -252,7 +254,7 @@ int radio_seek_down(radio_h radio,radio_seek_completed_cb callback, void *user_d
 
 /**
  * @brief Sets the radio frequency.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in]   radio The handle to radio
  * @param[in]   frequency The frequency to set [87500 ~ 108000] (kHz)
  * @return @c 0 on success,
@@ -267,7 +269,7 @@ int radio_set_frequency(radio_h radio, int frequency);
 
 /**
  * @brief Gets the current frequency of the radio.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in]   radio The handle to radio
  * @param[out]  frequency The current frequency [87500 ~ 108000] (kHz)
  * @return @c 0 on success,
@@ -282,7 +284,7 @@ int radio_get_frequency(radio_h radio, int *frequency);
 
 /**
  * @brief Gets the current signal strength of the radio.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in]   radio The handle to radio
  * @param[out]  strength The current signal strength [-128 ~ 128] (dBm)
  * @return @c 0 on success,
@@ -296,7 +298,7 @@ int radio_get_signal_strength(radio_h radio, int *strength);
 
 /**
  * @brief Starts scanning radio signals, asynchronously
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in]   radio The handle to radio
  * @param[in] callback	The callback function to register
  * @param[in] user_data	The user data to be passed to the callback function
@@ -319,7 +321,7 @@ int radio_scan_start(radio_h radio, radio_scan_updated_cb callback, void *user_d
 
 /**
  * @brief Stops scanning radio signals, asynchronously.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in]   radio The handle to radio
  * @param[in] callback	The callback function to register
  * @param[in] user_data	The user data to be passed to the callback function
@@ -339,7 +341,7 @@ int radio_scan_stop(radio_h radio, radio_scan_stopped_cb callback, void *user_da
 
 /**
  * @brief Sets the radio's mute status.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @details  If the mute status is @c true, no sounds will be played. If @c false, sounds will be played. Until this function is called, by default the radio is not muted.
  * @param[in]   radio The handle to radio
  * @param[in]   muted The new mute status: (@c true = mute, @c false = not muted)
@@ -355,7 +357,7 @@ int radio_set_mute(radio_h radio, bool muted);
 
 /**
  * @brief Gets the radio's mute status.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @details If the mute status is @c true, no sounds are played. If @c false, sounds are played.
  * @param[in]   radio The handle to radio
  * @param[out]  muted  The current mute status: (@c true = mute, @c false = not muted)
@@ -371,7 +373,7 @@ int radio_is_muted(radio_h radio, bool *muted);
 
 /**
  * @brief Registers a callback function to be invoked when the scan finishes.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in] radio	The handle to radio
  * @param[in] callback	The callback function to register
  * @param[in] user_data	The user data to be passed to the callback function
@@ -389,7 +391,7 @@ int radio_set_scan_completed_cb(radio_h radio, radio_scan_completed_cb callback,
 
 /**
  * @brief	Unregisters the callback function.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in] radio The handle to radio
  * @return @c 0 on success,
  *         otherwise a negative error value
@@ -403,7 +405,7 @@ int radio_unset_scan_completed_cb(radio_h radio);
 
 /**
  * @brief Registers a callback function to be invoked when the radio is interrupted.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in] radio	The handle to radio
  * @param[in] callback	The callback function to register
  * @param[in] user_data	The user data to be passed to the callback function
@@ -422,7 +424,7 @@ int radio_set_interrupted_cb(radio_h radio, radio_interrupted_cb callback, void 
 
 /**
  * @brief Unregisters the callback function.
- * @since_tizen 2.3
+ * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  * @param[in] radio The handle to radio
  * @return @c 0 on success,
  *         otherwise a negative error value
@@ -433,6 +435,36 @@ int radio_set_interrupted_cb(radio_h radio, radio_interrupted_cb callback, void 
  * @see radio_set_interrupted_cb()
  */
 int radio_unset_interrupted_cb(radio_h radio);
+
+/**
+ * @brief Gets the min, max frequency of the region.
+ * @since_tizen 2.4
+ * @param[in]   radio The handle to radio
+ * @param[out]  min_freq The min frequency [87500 ~ 108000] (kHz)
+ * @param[out]  max_freq The max frequency [87500 ~ 108000] (kHz)
+ * @return @c 0 on success,
+ *         otherwise a negative error value
+ * @retval #RADIO_ERROR_NONE Successful
+ * @retval #RADIO_ERROR_INVALID_PARAMETER Invalid parameter
+ * @retval #RADIO_ERROR_INVALID_OPERATION Invalid operation
+ * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
+ */
+int radio_get_frequency_range(radio_h radio, int *min_freq, int *max_freq);
+
+/**
+ * @brief Gets channel spacing.
+ * @since_tizen 2.4
+ * @param[in]   radio The handle to radio
+ * @param[out]  channel_spacing The channel spacing value
+ * @return @c 0 on success,
+ *         otherwise a negative error value
+ * @retval #RADIO_ERROR_NONE Successful
+ * @retval #RADIO_ERROR_INVALID_PARAMETER Invalid parameter
+ * @retval #RADIO_ERROR_INVALID_OPERATION Invalid operation
+ * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
+ */
+int radio_get_channel_spacing(radio_h radio, int *channel_spacing);
+
 
 /**
  * @}

@@ -28,7 +28,7 @@
 #include <unistd.h>
 
 #define DEFAULT_TEST_FREQ	107700
-#define MENU_ITEM_MAX	19
+#define MENU_ITEM_MAX	20
 #define _MAX_INPUT_STRING_ 100
 
 
@@ -340,6 +340,8 @@ int __menu(void)
 	printf("[16] radio_unset_scan_completed_cb\n");
 	printf("[17] radio_set_interrupted_cb\n");
 	printf("[18] radio_unset_interrupted_cb\n");
+	printf("[19] radio_get_frequency_range\n");
+	printf("[20] radio_get_channel_spacing\n");
 
 	printf("[0] quit\n");
 	printf("---------------------------------------------------------\n");
@@ -495,6 +497,23 @@ void __call_api( int choosen )
 		case 18:
 		{
 			RADIO_TEST__( radio_unset_interrupted_cb(g_my_radio); )
+		}
+		break;
+
+		case 19:
+		{
+			int min = 0;
+			int max = 0;
+			RADIO_TEST__( radio_get_frequency_range(g_my_radio, &min, &max); )
+			printf("min : %d max: %d \n", min, max);
+		}
+		break;
+
+		case 20:
+		{
+			int channel_spacing = 0;
+			RADIO_TEST__( radio_get_channel_spacing(g_my_radio, &channel_spacing); )
+			printf("channel_spacing : %d \n", channel_spacing);
 		}
 		break;
 

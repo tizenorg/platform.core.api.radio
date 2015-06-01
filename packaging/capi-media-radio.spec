@@ -1,25 +1,22 @@
 Name:       capi-media-radio
 Summary:    A Radio library in Tizen Native API
-Version:    0.1.0
+Version:    0.1.1
 Release:    10
 Group:      API/C API
 License:    Apache-2.0
 Source0:    %{name}-%{version}.tar.gz
 Source1001: 	capi-media-radio.manifest
-BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(dlog)
-BuildRequires:  pkgconfig(vconf)
 BuildRequires:  pkgconfig(mm-radio)
 BuildRequires:  pkgconfig(capi-base-common)
 BuildRequires:  pkgconfig(capi-system-info)
 BuildRequires:  cmake
-BuildRequires:  gettext-devel
 
 %description
 A Radio library in Tizen Native API.
 
 
-%package devel 
+%package devel
 Summary:    A Radio library in Tizen Native API (Development)
 Group:      Development/API
 Requires:   %{name} = %{version}-%{release}
@@ -50,7 +47,7 @@ make %{?jobs:-j%jobs}
 %defattr(-,root,root,-)
 %{_libdir}/libcapi-media-radio.so.*
 
-%files devel 
+%files devel
 %manifest %{name}.manifest
 %defattr(-,root,root,-)
 /usr/include/media/radio.h
