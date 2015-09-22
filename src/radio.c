@@ -22,6 +22,7 @@
 #include <dlog.h>
 #include <glib.h>
 #include <system_info.h>
+#include <unistd.h>
 
 #ifdef LOG_TAG
 #undef LOG_TAG
@@ -290,6 +291,7 @@ int radio_create(radio_h *radio)
 	RADIO_SUPPORT_CHECK(__radio_check_system_info_feature_supported());
 	RADIO_INSTANCE_CHECK(radio);
 	radio_s * handle;
+	int pid = getpid();
 
 	handle = (radio_s*)malloc( sizeof(radio_s));
 	if (handle != NULL)
@@ -310,6 +312,11 @@ int radio_create(radio_h *radio)
 	{
 		*radio = (radio_h)handle;
 
+		ret =mm_radio_audio_focus_register(handle->mm_handle, pid);
+		if(ret != MM_ERROR_NONE)
+		{
+			LOGW("[%s] Failed to mm_radio_audio_focus_register (0x%x)" ,__FUNCTION__, ret);
+		}
 		ret = mm_radio_set_message_callback(handle->mm_handle, __msg_callback, (void*)handle);
 		if(ret != MM_ERROR_NONE)
 		{
