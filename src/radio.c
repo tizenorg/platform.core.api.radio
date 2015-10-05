@@ -161,9 +161,6 @@ static radio_interrupted_code_e __convert_interrupted_code(int code)
 		case MM_MSG_CODE_INTERRUPTED_BY_EMERGENCY_START:
 			ret = RADIO_INTERRUPTED_BY_EMERGENCY;
 			break;
-		case MM_MSG_CODE_INTERRUPTED_BY_RESUMABLE_MEDIA:
-			ret = RADIO_INTERRUPTED_BY_RESUMABLE_MEDIA;
-			break;
 		case MM_MSG_CODE_INTERRUPTED_BY_RESOURCE_CONFLICT:
 		default :
 			ret = RADIO_INTERRUPTED_BY_RESOURCE_CONFLICT;
