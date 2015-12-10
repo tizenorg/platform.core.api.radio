@@ -22,7 +22,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 #include "radio.h"
 #include "radio_test_type.h"
 #include <unistd.h>
@@ -30,7 +29,6 @@
 #define DEFAULT_TEST_FREQ	107700
 #define MENU_ITEM_MAX	20
 #define _MAX_INPUT_STRING_ 100
-
 
 /* test items...*/
 int __test_radio_init(void);
@@ -42,80 +40,69 @@ int __test_repeat_whole(void);
 int __test_manual_api_calling(void);
 int __test_radio_hw_debug(void);
 
-
 /* functions*/
 static void __print_menu(void);
 static void __run_test(int key);
 
 int radio_rt_api_test(void);
 static int __menu(void);
-static void __call_api( int choosen );
+static void __call_api(int choosen);
 void __radio_seek_completed_cb(int frequency, void *user_data);
 void __radio_scan_updated_cb(int freq, void *user_data);
 void __radio_scan_stop_cb(void *user_data);
 void __radio_set_scan_completed_cb(void *user_param);
 void __radio_set_interrupted_cb(radio_interrupted_code_e code, void *user_param);
 
-
-
 /* list of tests*/
-test_item_t g_tests[100] =
-{
+test_item_t g_tests[100] = {
 	/* menu string : short string to be displayed to menu
-	     description : detailed description
-	     test function :  a pointer to a actual test function
-	     0 : to be filled with return value of test function
+	   description : detailed description
+	   test function :  a pointer to a actual test function
+	   0 : to be filled with return value of test function
 	 */
 	{
-		"init test",
-		"check radio init function",
-		__test_radio_init,
-	0
-	},
+	 "init test",
+	 "check radio init function",
+	 __test_radio_init,
+	 0},
 
 	{
-		"listening gorealra",
-		"let's listen to the gorealra!",
-		__test_radio_listen_gorealra,
-	0
-	},
+	 "listening gorealra",
+	 "let's listen to the gorealra!",
+	 __test_radio_listen_gorealra,
+	 0},
 
 	{
-		"repeat_init_release",
-		"repeat init and release and check if it working and memory usage increment",
-		__test_repeat_init_release,
-	0
-	},
+	 "repeat_init_release",
+	 "repeat init and release and check if it working and memory usage increment",
+	 __test_repeat_init_release,
+	 0},
 
 	{
-		"repeat_start_stop",
-		"repeat start and stop and check if it working and memory usage increment",
-		__test_repeat_start_stop,
-	0
-	},
+	 "repeat_start_stop",
+	 "repeat start and stop and check if it working and memory usage increment",
+	 __test_repeat_start_stop,
+	 0},
 
 	{
-		"repeat_seek",
-		"repeat seek and check if it working and memory usage increment",
-		__test_repeat_seek,
-	0
-	},
+	 "repeat_seek",
+	 "repeat seek and check if it working and memory usage increment",
+	 __test_repeat_seek,
+	 0},
 
 	{
-		"repeat_whole",
-		"repeat whole radio sequence and check if it working and memory usage increment",
-		__test_repeat_whole,
-	0
-	},
+	 "repeat_whole",
+	 "repeat whole radio sequence and check if it working and memory usage increment",
+	 __test_repeat_whole,
+	 0},
 
 	{
-		"manual api calling test",
-		"mapping each api to each test manu. just like other testsuite. try to reproduce the bugs with it.",
-		__test_manual_api_calling,
-	0
-	},
+	 "manual api calling test",
+	 "mapping each api to each test manu. just like other testsuite. try to reproduce the bugs with it.",
+	 __test_manual_api_calling,
+	 0},
 
-	/* add tests here*/
+	/* add tests here */
 
 	/* NOTE : do not remove this last item */
 	{"end", "", NULL, 0},
@@ -134,14 +121,12 @@ int main(int argc, char **argv)
 		do {
 			key = getchar();
 
-			if ( key >= '0' && key <= '9')
-			{
-				__run_test( key - '0' );
-			}
-		}while ( key == '\n' );
-		if(key == 'Q' || key == 'q')
+			if (key >= '0' && key <= '9')
+				__run_test(key - '0');
+		} while (key == '\n');
+		if (key == 'Q' || key == 'q')
 			break;
-	}while(1);
+	} while (1);
 
 	printf("radio test client finished\n");
 
@@ -155,10 +140,9 @@ void __print_menu(void)
 	printf("\n\nFMRadio testing menu\n");
 	printf("------------------------------------------\n");
 
-	for ( i = 0; g_tests[i].func; i++ )
-	{
-		printf( "[%d] %s\n", i, g_tests[i].menu_string );
-	}
+	for (i = 0; g_tests[i].func; i++)
+		printf("[%d] %s\n", i, g_tests[i].menu_string);
+
 	printf("[q] quit\n");
 
 	g_num_of_tests = i;
@@ -172,31 +156,25 @@ void __run_test(int key)
 
 	/* check index */
 	printf("#tests : %d    key : %d\n", g_num_of_tests, key);
-	if ( key >= g_num_of_tests || key < 0 )
-	{
+	if (key >= g_num_of_tests || key < 0) {
 		printf("unassigned key has pressed : %d\n", key);
 		return;
 	}
 
-	/* display description*/
-	printf( "excuting test : %s\n", g_tests[key].menu_string );
-	printf( "description : %s\n", g_tests[key].description );
+	/* display description */
+	printf("excuting test : %s\n", g_tests[key].menu_string);
+	printf("description : %s\n", g_tests[key].description);
 
-	/* calling test function*/
+	/* calling test function */
 	ret = g_tests[key].func();
 
-	g_tests[key].result =  ret;
+	g_tests[key].result = ret;
 
-	if ( ret )
-	{
-		printf( "TEST FAILED. ret code : %d\n", g_tests[key].result);
-	}
+	if (ret)
+		printf("TEST FAILED. ret code : %d\n", g_tests[key].result);
 	else
-	{
-		printf( "TEST SUCCEDED. ret code : %d\n", g_tests[key].result);
-	}
+		printf("TEST SUCCEDED. ret code : %d\n", g_tests[key].result);
 }
-
 
 /* test items...*/
 int __test_radio_init(void)
@@ -206,8 +184,8 @@ int __test_radio_init(void)
 	int ret = RADIO_ERROR_NONE;
 	radio_h radio;
 
-	RADIO_TEST__( radio_create(&radio); )
-	RADIO_TEST__( radio_destroy(radio); )
+	RADIO_TEST__(radio_create(&radio);)
+	RADIO_TEST__(radio_destroy(radio);)
 	return ret;
 }
 
@@ -218,12 +196,12 @@ int __test_radio_listen_gorealra(void)
 	int ret = RADIO_ERROR_NONE;
 	radio_h radio;
 
-	RADIO_TEST__( radio_create(&radio); )
-	RADIO_TEST__( radio_set_frequency( radio, DEFAULT_TEST_FREQ ); )
-	RADIO_TEST__( radio_start(radio); )
+	RADIO_TEST__(radio_create(&radio);)
+	RADIO_TEST__(radio_set_frequency(radio, DEFAULT_TEST_FREQ);)
+	RADIO_TEST__(radio_start(radio);)
 	usleep(5000 * 1000);
-	RADIO_TEST__( radio_stop(radio); )
-	RADIO_TEST__( radio_destroy(radio); )
+	RADIO_TEST__(radio_stop(radio);)
+	RADIO_TEST__(radio_destroy(radio);)
 	return ret;
 }
 
@@ -235,11 +213,9 @@ int __test_repeat_init_release(void)
 	int cnt = 0;
 	radio_h radio;
 
-	while ( cnt < 1000 )
-	{
-		RADIO_TEST__( radio_create(&radio); )
-		RADIO_TEST__( radio_destroy(radio); )
-
+	while (cnt < 1000) {
+		RADIO_TEST__(radio_create(&radio);)
+		RADIO_TEST__(radio_destroy(radio);)
 		cnt++;
 
 		printf("%s : repeat count : %d\n", __FUNCTION__, cnt);
@@ -255,17 +231,14 @@ int __test_repeat_start_stop(void)
 	int cnt = 0;
 	radio_h radio;
 
-	RADIO_TEST__( radio_create(&radio); )
-	RADIO_TEST__( radio_set_frequency( radio, DEFAULT_TEST_FREQ ); )
+	RADIO_TEST__(radio_create(&radio);)
+	RADIO_TEST__(radio_set_frequency(radio, DEFAULT_TEST_FREQ);)
 
-	while(cnt < 10)
-	{
-		RADIO_TEST__( radio_start(radio); )
+	while (cnt < 10) {
+		RADIO_TEST__(radio_start(radio);)
 		usleep(2000 * 1000);
-		RADIO_TEST__( radio_stop(radio); )
-
+		RADIO_TEST__(radio_stop(radio);)
 		cnt++;
-
 		printf("%s : repeat count : %d\n", __FUNCTION__, cnt);
 	}
 
@@ -292,22 +265,20 @@ int __test_manual_api_calling(void)
 	return 0;
 }
 
-
 int radio_rt_api_test(void)
 {
-	while(1)
-	{
+	while (1) {
 		int choosen = 0;
 
 		choosen = __menu();
 
-		if ( choosen == -1)
+		if (choosen == -1)
 			continue;
 
-		if ( choosen == 0 )
+		if (choosen == 0)
 			break;
 
-		__call_api( choosen );
+		__call_api(choosen);
 	}
 
 	printf("radio test client finished\n");
@@ -347,189 +318,182 @@ int __menu(void)
 	printf("---------------------------------------------------------\n");
 	printf("choose one : ");
 
-	if ( scanf("%d", &menu_item) == 0)
-	{
+	if (scanf("%d", &menu_item) == 0) {
 		char temp[_MAX_INPUT_STRING_];
-		if (scanf("%s", temp) ==0)
-		{
+		if (scanf("%s", temp) == 0)
 			printf("Error while flushing the input buffer - but lets continue\n");
-		}
 		return -1;
 	}
 
-
-	if ( menu_item > MENU_ITEM_MAX )
+	if (menu_item > MENU_ITEM_MAX)
 		menu_item = -1;
 
 	return menu_item;
 }
 
-void __call_api( int choosen )
+void __call_api(int choosen)
 {
 	int ret = RADIO_ERROR_NONE;
 
-	switch( choosen )
-	{
-		case 1:
+	switch (choosen) {
+	case 1:
 		{
-			RADIO_TEST__( radio_create( &g_my_radio ); )
+			RADIO_TEST__(radio_create(&g_my_radio);)
 		}
 		break;
 
-		case 2:
+	case 2:
 		{
-			RADIO_TEST__( radio_destroy( g_my_radio ); )
+			RADIO_TEST__(radio_destroy(g_my_radio);)
 			g_my_radio = 0;
 		}
 		break;
 
-		case 3:
+	case 3:
 		{
 			radio_state_e state;
-			RADIO_TEST__( radio_get_state(g_my_radio, &state); )
-
+			RADIO_TEST__(radio_get_state(g_my_radio, &state);)
 			printf("state : %d\n", state);
 		}
 		break;
 
-		case 4:
+	case 4:
 		{
-			RADIO_TEST__( radio_start(g_my_radio); )
+			RADIO_TEST__(radio_start(g_my_radio);)
 		}
 		break;
 
-		case 5:
+	case 5:
 		{
-			RADIO_TEST__( radio_stop(g_my_radio); )
+			RADIO_TEST__(radio_stop(g_my_radio);)
 		}
 		break;
 
-		case 6:
+	case 6:
 		{
-			RADIO_TEST__( radio_seek_up(g_my_radio, __radio_seek_completed_cb, NULL); )
+			RADIO_TEST__(radio_seek_up(g_my_radio, __radio_seek_completed_cb, NULL);)
 
 		}
 		break;
 
-		case 7:
+	case 7:
 		{
-			RADIO_TEST__( radio_seek_down(g_my_radio, __radio_seek_completed_cb, NULL); )
+			RADIO_TEST__(radio_seek_down(g_my_radio, __radio_seek_completed_cb, NULL);)
 		}
 		break;
 
-		case 8:
+	case 8:
 		{
 			int freq = 0;
 			printf("input freq : ");
 			if (scanf("%d", &freq) == 0)
 				return;
 
-			RADIO_TEST__( radio_set_frequency(g_my_radio, freq); )
+			RADIO_TEST__(radio_set_frequency(g_my_radio, freq);)
 		}
 		break;
 
-		case 9:
+	case 9:
 		{
 			int freq = 0;
-			RADIO_TEST__( radio_get_frequency(g_my_radio, &freq ); )
+			RADIO_TEST__(radio_get_frequency(g_my_radio, &freq);)
 
-			printf("freq : %d\n", freq);
+				printf("freq : %d\n", freq);
 		}
 		break;
 
-		case 10:
+	case 10:
 		{
 			int signal_strength = 0;
-			RADIO_TEST__( radio_get_signal_strength(g_my_radio, &signal_strength); )
+			RADIO_TEST__(radio_get_signal_strength(g_my_radio, &signal_strength);)
 			printf("signal strength is : %d \n", signal_strength);
 		}
 		break;
 
-		case 11:
+	case 11:
 		{
-			RADIO_TEST__( radio_scan_start(g_my_radio, &__radio_scan_updated_cb, NULL); )
+			RADIO_TEST__(radio_scan_start(g_my_radio, &__radio_scan_updated_cb, NULL);)
 		}
 		break;
 
-		case 12:
+	case 12:
 		{
-			RADIO_TEST__( radio_scan_stop(g_my_radio, &__radio_scan_stop_cb, NULL); )
+			RADIO_TEST__(radio_scan_stop(g_my_radio, &__radio_scan_stop_cb, NULL);)
 		}
 		break;
 
-		case 13:
+	case 13:
 		{
 			int muted = 0;
 			printf("select one(0:UNMUTE/1:MUTE) : ");
-			if ( scanf("%d", &muted) == 0)
+			if (scanf("%d", &muted) == 0)
 				return;
-			RADIO_TEST__( radio_set_mute(g_my_radio, muted); )
+			RADIO_TEST__(radio_set_mute(g_my_radio, muted);)
 		}
 		break;
 
-		case 14:
+	case 14:
 		{
 			bool muted = 0;
-			RADIO_TEST__( radio_is_muted(g_my_radio, &muted); )
+			RADIO_TEST__(radio_is_muted(g_my_radio, &muted);)
 			printf("muted : %d \n", muted);
 		}
 		break;
 
-
-		case 15:
+	case 15:
 		{
-			RADIO_TEST__( radio_set_scan_completed_cb(g_my_radio, &__radio_set_scan_completed_cb, NULL); )
+			RADIO_TEST__(radio_set_scan_completed_cb(g_my_radio, &__radio_set_scan_completed_cb, NULL);)
 		}
 		break;
 
-		case 16:
+	case 16:
 		{
-			RADIO_TEST__( radio_unset_scan_completed_cb(g_my_radio); )
+			RADIO_TEST__(radio_unset_scan_completed_cb(g_my_radio);)
 		}
 		break;
 
-		case 17:
+	case 17:
 		{
-			RADIO_TEST__( radio_set_interrupted_cb(g_my_radio, &__radio_set_interrupted_cb, NULL ); )
+			RADIO_TEST__(radio_set_interrupted_cb(g_my_radio, &__radio_set_interrupted_cb, NULL);)
 		}
 		break;
 
-		case 18:
+	case 18:
 		{
-			RADIO_TEST__( radio_unset_interrupted_cb(g_my_radio); )
+			RADIO_TEST__(radio_unset_interrupted_cb(g_my_radio);)
 		}
 		break;
 
-		case 19:
+	case 19:
 		{
 			int min = 0;
 			int max = 0;
-			RADIO_TEST__( radio_get_frequency_range(g_my_radio, &min, &max); )
+			RADIO_TEST__(radio_get_frequency_range(g_my_radio, &min, &max);)
 			printf("min : %d max: %d \n", min, max);
 		}
 		break;
 
-		case 20:
+	case 20:
 		{
 			int channel_spacing = 0;
-			RADIO_TEST__( radio_get_channel_spacing(g_my_radio, &channel_spacing); )
+			RADIO_TEST__(radio_get_channel_spacing(g_my_radio, &channel_spacing);)
 			printf("channel_spacing : %d \n", channel_spacing);
 		}
 		break;
 
-		default:
-			break;
+	default:
+		break;
 	}
 }
 
-
 void __radio_seek_completed_cb(int frequency, void *user_data)
 {
-	printf("__radio_seek_completed_cb freq is %d\n" , frequency);
+	printf("__radio_seek_completed_cb freq is %d\n", frequency);
 }
+
 void __radio_scan_updated_cb(int frequency, void *user_param)
 {
-	printf("__radio_scan_updated_cb freq is %d\n" , frequency);
+	printf("__radio_scan_updated_cb freq is %d\n", frequency);
 }
 
 void __radio_scan_stop_cb(void *user_param)
@@ -546,4 +510,3 @@ void __radio_set_interrupted_cb(radio_interrupted_code_e code, void *user_param)
 {
 	printf("__radio_set_interrupted_cb\n");
 }
-
