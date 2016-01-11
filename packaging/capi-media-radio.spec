@@ -1,7 +1,7 @@
 Name:       capi-media-radio
 Summary:    A Radio library in Tizen Native API
 Version:    0.1.2
-Release:    11
+Release:    12
 Group:      API/C API
 License:    Apache-2.0
 Source0:    %{name}-%{version}.tar.gz
@@ -35,7 +35,12 @@ MAJORVER=`echo %{version} | awk 'BEGIN {FS="."}{print $1}'`
 make %{?jobs:-j%jobs}
 
 %install
+rm -rf %{buildroot}
 %make_install
+mkdir -p %{buildroot}/usr/share/license
+mkdir -p %{buildroot}/usr/bin
+cp LICENSE.APLv2 %{buildroot}/usr/share/license/%{name}
+cp test/radio_test %{buildroot}/usr/bin
 
 
 %post -p /sbin/ldconfig
@@ -46,6 +51,8 @@ make %{?jobs:-j%jobs}
 %manifest %{name}.manifest
 %defattr(-,root,root,-)
 %{_libdir}/libcapi-media-radio.so.*
+%{_datadir}/license/%{name}
+%{_bindir}/*
 
 %files devel
 %manifest %{name}.manifest
