@@ -61,16 +61,16 @@ CONFIGURE_FILE(
 )
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${fw_name}.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
 
-#ADD_SUBDIRECTORY(test)
+ADD_SUBDIRECTORY(test)
 
 IF(UNIX)
 
 ADD_CUSTOM_TARGET (distclean @echo cleaning for source distribution)
 ADD_CUSTOM_COMMAND(
-        DEPENDS clean 
+        DEPENDS clean
         COMMENT "distribution clean"
         COMMAND find
-        ARGS    . 
+        ARGS    .
         -not -name config.cmake -and \(
         -name tester.c -or
         -name Testing -or
