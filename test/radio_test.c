@@ -320,7 +320,7 @@ int __menu(void)
 
 	if (scanf("%d", &menu_item) == 0) {
 		char temp[_MAX_INPUT_STRING_];
-		if (scanf("%s", temp) == 0)
+		if (scanf("%100s", temp) == 0)
 			printf("Error while flushing the input buffer - but lets continue\n");
 		return -1;
 	}
