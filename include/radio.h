@@ -438,7 +438,7 @@ int radio_unset_interrupted_cb(radio_h radio);
 
 /**
  * @brief Gets the min, max frequency of the region.
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param[in]   radio The handle to radio
  * @param[out]  min_freq The min frequency [87500 ~ 108000] (kHz)
  * @param[out]  max_freq The max frequency [87500 ~ 108000] (kHz)
@@ -453,7 +453,7 @@ int radio_get_frequency_range(radio_h radio, int *min_freq, int *max_freq);
 
 /**
  * @brief Gets channel spacing.
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param[in]   radio The handle to radio
  * @param[out]  channel_spacing The channel spacing value
  * @return @c 0 on success,

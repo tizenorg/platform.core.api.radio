@@ -1,7 +1,7 @@
 Name:       capi-media-radio
 Summary:    A Radio library in Tizen Native API
 Version:    0.1.2
-Release:    12
+Release:    13
 Group:      API/C API
 License:    Apache-2.0
 Source0:    %{name}-%{version}.tar.gz
