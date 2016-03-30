@@ -36,13 +36,8 @@ typedef struct __test_item {
 
 #define RADIO_TEST__(x_test)	\
 		ret = x_test	\
-		if ( ! ret )	\
-		{	\
+		if (!ret)	\
 			printf("PASS : %s -- %s:%d\n", #x_test, __FILE__, __LINE__);	\
-		}	\
 		else	\
-		{	\
 			printf("FAIL : %s ERR-CODE : 0x%x -- %s:%d\n", #x_test, ret, __FILE__, __LINE__);	\
-		}
-
 #endif	/* MM_RADIO_TEST_TYPE_H_ */

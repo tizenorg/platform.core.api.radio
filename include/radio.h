@@ -44,8 +44,7 @@ typedef struct radio_s *radio_h;
  * @brief Enumeration of radio state.
  * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  */
-typedef enum
-{
+typedef enum {
 	RADIO_STATE_READY,			/**< Ready to play or scan */
 	RADIO_STATE_PLAYING,		/**< Playing the audio from the tuner */
 	RADIO_STATE_SCANNING,		/**< Scanning/Searching for the next station signal that starts from a given starting frequency */
@@ -55,8 +54,7 @@ typedef enum
  * @brief Enumeration of error codes for the radio.
  * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  */
-typedef enum
-{
+typedef enum {
 	RADIO_ERROR_NONE		        = TIZEN_ERROR_NONE,								/**< Successful */
 	RADIO_ERROR_OUT_OF_MEMORY	    = TIZEN_ERROR_OUT_OF_MEMORY,				/**< Out of memory */
 	RADIO_ERROR_INVALID_PARAMETER  = TIZEN_ERROR_INVALID_PARAMETER,			/**< Invalid parameter */
@@ -72,17 +70,16 @@ typedef enum
  * @brief Enumeration of radio interrupted type.
  * @since_tizen @if MOBILE 2.3 @elseif WEARABLE 2.3.1 @endif
  */
-typedef enum
-{
-       RADIO_INTERRUPTED_COMPLETED = 0,					/**< Interrupt completed */
-       RADIO_INTERRUPTED_BY_MEDIA,						/**< Interrupted by a non-resumable media application */
-       RADIO_INTERRUPTED_BY_CALL,						/**< Interrupted by an incoming call */
-       RADIO_INTERRUPTED_BY_EARJACK_UNPLUG,			/**< Interrupted by unplugging headphones */
-       RADIO_INTERRUPTED_BY_RESOURCE_CONFLICT,		/**< Interrupted by a resource conflict */
-       RADIO_INTERRUPTED_BY_ALARM,						/**< Interrupted by an alarm */
-       RADIO_INTERRUPTED_BY_EMERGENCY,				/**< Interrupted by an emergency */
-       RADIO_INTERRUPTED_BY_RESUMABLE_MEDIA,			/**< Interrupted by a resumable media application */
-       RADIO_INTERRUPTED_BY_NOTIFICATION,				/**< Interrupted by a notification */
+typedef enum {
+	RADIO_INTERRUPTED_COMPLETED = 0,					/**< Interrupt completed */
+	RADIO_INTERRUPTED_BY_MEDIA,						/**< Interrupted by a non-resumable media application */
+	RADIO_INTERRUPTED_BY_CALL,						/**< Interrupted by an incoming call */
+	RADIO_INTERRUPTED_BY_EARJACK_UNPLUG,			/**< Interrupted by unplugging headphones */
+	RADIO_INTERRUPTED_BY_RESOURCE_CONFLICT,		/**< Interrupted by a resource conflict */
+	RADIO_INTERRUPTED_BY_ALARM,						/**< Interrupted by an alarm */
+	RADIO_INTERRUPTED_BY_EMERGENCY,				/**< Interrupted by an emergency */
+	RADIO_INTERRUPTED_BY_RESUMABLE_MEDIA,			/**< Interrupted by a resumable media application */
+	RADIO_INTERRUPTED_BY_NOTIFICATION,				/**< Interrupted by a notification */
 } radio_interrupted_code_e;
 
 /**
@@ -231,7 +228,7 @@ int radio_stop(radio_h radio);
  * @post It invokes radio_seek_completed_cb() when the seek completes.
  * @see radio_seek_down()
  */
-int radio_seek_up(radio_h radio,radio_seek_completed_cb callback, void *user_data );
+int radio_seek_up(radio_h radio, radio_seek_completed_cb callback, void *user_data);
 
 /**
  * @brief Seeks down the effective frequency of the radio, asynchronously.
@@ -250,7 +247,7 @@ int radio_seek_up(radio_h radio,radio_seek_completed_cb callback, void *user_dat
  * @post It invokes radio_seek_completed_cb() when the seek completes.
  * @see radio_seek_up()
  */
-int radio_seek_down(radio_h radio,radio_seek_completed_cb callback, void *user_data );
+int radio_seek_down(radio_h radio, radio_seek_completed_cb callback, void *user_data);
 
 /**
  * @brief Sets the radio frequency.
