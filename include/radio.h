@@ -19,6 +19,10 @@
 
 #include <tizen.h>
 
+#ifndef RADIO_EXPORT_API
+#define RADIO_EXPORT_API
+#endif // RADIO_EXPORT_API
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -145,7 +149,7 @@ typedef void (*radio_interrupted_cb)(radio_interrupted_code_e code, void *user_d
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
  * @see radio_destroy()
  */
-int radio_create(radio_h *radio);
+RADIO_EXPORT_API int radio_create(radio_h *radio);
 
 /**
  * @brief Destroys the radio handle and releases all its resources.
@@ -161,7 +165,7 @@ int radio_create(radio_h *radio);
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
  * @see radio_create()
  */
-int radio_destroy(radio_h radio);
+RADIO_EXPORT_API int radio_destroy(radio_h radio);
 
 /**
  * @brief Gets the radio's current state.
@@ -174,7 +178,7 @@ int radio_destroy(radio_h radio);
  * @retval #RADIO_ERROR_INVALID_PARAMETER Invalid parameter
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
  */
-int  radio_get_state(radio_h radio, radio_state_e *state);
+RADIO_EXPORT_API int  radio_get_state(radio_h radio, radio_state_e *state);
 
 /**
  * @brief Starts playing the radio.
@@ -192,7 +196,7 @@ int  radio_get_state(radio_h radio, radio_state_e *state);
  * @post The radio state will be #RADIO_STATE_PLAYING.
  * @see radio_stop()
  */
-int radio_start(radio_h radio);
+RADIO_EXPORT_API int radio_start(radio_h radio);
 
 /**
  * @brief Stops playing the radio.
@@ -209,7 +213,7 @@ int radio_start(radio_h radio);
  * @see radio_start()
  * @see radio_scan_start()
  */
-int radio_stop(radio_h radio);
+RADIO_EXPORT_API int radio_stop(radio_h radio);
 
 /**
  * @brief Seeks up the effective frequency of the radio, asynchronously.
@@ -228,7 +232,7 @@ int radio_stop(radio_h radio);
  * @post It invokes radio_seek_completed_cb() when the seek completes.
  * @see radio_seek_down()
  */
-int radio_seek_up(radio_h radio, radio_seek_completed_cb callback, void *user_data);
+RADIO_EXPORT_API int radio_seek_up(radio_h radio, radio_seek_completed_cb callback, void *user_data);
 
 /**
  * @brief Seeks down the effective frequency of the radio, asynchronously.
@@ -247,7 +251,7 @@ int radio_seek_up(radio_h radio, radio_seek_completed_cb callback, void *user_da
  * @post It invokes radio_seek_completed_cb() when the seek completes.
  * @see radio_seek_up()
  */
-int radio_seek_down(radio_h radio, radio_seek_completed_cb callback, void *user_data);
+RADIO_EXPORT_API int radio_seek_down(radio_h radio, radio_seek_completed_cb callback, void *user_data);
 
 /**
  * @brief Sets the radio frequency.
@@ -262,7 +266,7 @@ int radio_seek_down(radio_h radio, radio_seek_completed_cb callback, void *user_
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
  * @see radio_get_frequency()
  */
-int radio_set_frequency(radio_h radio, int frequency);
+RADIO_EXPORT_API int radio_set_frequency(radio_h radio, int frequency);
 
 /**
  * @brief Gets the current frequency of the radio.
@@ -277,7 +281,7 @@ int radio_set_frequency(radio_h radio, int frequency);
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
  * @see radio_set_frequency()
  */
-int radio_get_frequency(radio_h radio, int *frequency);
+RADIO_EXPORT_API int radio_get_frequency(radio_h radio, int *frequency);
 
 /**
  * @brief Gets the current signal strength of the radio.
@@ -291,7 +295,7 @@ int radio_get_frequency(radio_h radio, int *frequency);
  * @retval #RADIO_ERROR_INVALID_OPERATION Invalid operation
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
  */
-int radio_get_signal_strength(radio_h radio, int *strength);
+RADIO_EXPORT_API int radio_get_signal_strength(radio_h radio, int *strength);
 
 /**
  * @brief Starts scanning radio signals, asynchronously
@@ -314,7 +318,7 @@ int radio_get_signal_strength(radio_h radio, int *strength);
  * @see radio_set_scan_completed_cb()
  * @see radio_scan_completed_cb()
  */
-int radio_scan_start(radio_h radio, radio_scan_updated_cb callback, void *user_data);
+RADIO_EXPORT_API int radio_scan_start(radio_h radio, radio_scan_updated_cb callback, void *user_data);
 
 /**
  * @brief Stops scanning radio signals, asynchronously.
@@ -334,7 +338,7 @@ int radio_scan_start(radio_h radio, radio_scan_updated_cb callback, void *user_d
  * @post The radio state will be #RADIO_STATE_READY.
  * @see radio_scan_start()
  */
-int radio_scan_stop(radio_h radio, radio_scan_stopped_cb callback, void *user_data);
+RADIO_EXPORT_API int radio_scan_stop(radio_h radio, radio_scan_stopped_cb callback, void *user_data);
 
 /**
  * @brief Sets the radio's mute status.
@@ -350,7 +354,7 @@ int radio_scan_stop(radio_h radio, radio_scan_stopped_cb callback, void *user_da
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
  * @see radio_is_muted()
  */
-int radio_set_mute(radio_h radio, bool muted);
+RADIO_EXPORT_API int radio_set_mute(radio_h radio, bool muted);
 
 /**
  * @brief Gets the radio's mute status.
@@ -366,7 +370,7 @@ int radio_set_mute(radio_h radio, bool muted);
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
  * @see radio_set_mute()
  */
-int radio_is_muted(radio_h radio, bool *muted);
+RADIO_EXPORT_API int radio_is_muted(radio_h radio, bool *muted);
 
 /**
  * @brief Registers a callback function to be invoked when the scan finishes.
@@ -384,7 +388,7 @@ int radio_is_muted(radio_h radio, bool *muted);
  * @see radio_unset_scan_completed_cb()
  * @see radio_scan_completed_cb()
  */
-int radio_set_scan_completed_cb(radio_h radio, radio_scan_completed_cb callback, void *user_data);
+RADIO_EXPORT_API int radio_set_scan_completed_cb(radio_h radio, radio_scan_completed_cb callback, void *user_data);
 
 /**
  * @brief	Unregisters the callback function.
@@ -398,7 +402,7 @@ int radio_set_scan_completed_cb(radio_h radio, radio_scan_completed_cb callback,
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
  * @see radio_set_scan_completed_cb()
  */
-int radio_unset_scan_completed_cb(radio_h radio);
+RADIO_EXPORT_API int radio_unset_scan_completed_cb(radio_h radio);
 
 /**
  * @brief Registers a callback function to be invoked when the radio is interrupted.
@@ -417,7 +421,7 @@ int radio_unset_scan_completed_cb(radio_h radio);
  * @see #radio_interrupted_code_e
  * @see radio_interrupted_cb()
  */
-int radio_set_interrupted_cb(radio_h radio, radio_interrupted_cb callback, void *user_data);
+RADIO_EXPORT_API int radio_set_interrupted_cb(radio_h radio, radio_interrupted_cb callback, void *user_data);
 
 /**
  * @brief Unregisters the callback function.
@@ -431,7 +435,7 @@ int radio_set_interrupted_cb(radio_h radio, radio_interrupted_cb callback, void 
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
  * @see radio_set_interrupted_cb()
  */
-int radio_unset_interrupted_cb(radio_h radio);
+RADIO_EXPORT_API int radio_unset_interrupted_cb(radio_h radio);
 
 /**
  * @brief Gets the min, max frequency of the region.
@@ -446,7 +450,7 @@ int radio_unset_interrupted_cb(radio_h radio);
  * @retval #RADIO_ERROR_INVALID_OPERATION Invalid operation
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
  */
-int radio_get_frequency_range(radio_h radio, int *min_freq, int *max_freq);
+RADIO_EXPORT_API int radio_get_frequency_range(radio_h radio, int *min_freq, int *max_freq);
 
 /**
  * @brief Gets channel spacing.
@@ -460,7 +464,7 @@ int radio_get_frequency_range(radio_h radio, int *min_freq, int *max_freq);
  * @retval #RADIO_ERROR_INVALID_OPERATION Invalid operation
  * @retval #RADIO_ERROR_NOT_SUPPORTED Not supported
  */
-int radio_get_channel_spacing(radio_h radio, int *channel_spacing);
+RADIO_EXPORT_API int radio_get_channel_spacing(radio_h radio, int *channel_spacing);
 
 
 /**
