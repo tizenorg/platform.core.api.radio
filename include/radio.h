@@ -61,7 +61,7 @@ typedef enum {
 	RADIO_ERROR_INVALID_OPERATION	= TIZEN_ERROR_INVALID_OPERATION,			/**< Invalid operation */
 	RADIO_ERROR_INVALID_STATE	    = TIZEN_ERROR_RADIO | 0x01	,					/**< Invalid state */
 	RADIO_ERROR_SOUND_POLICY	    = TIZEN_ERROR_RADIO | 0x02	,					/**< Sound policy error */
-	RADIO_ERROR_NO_ANTENNA			= TIZEN_ERROR_RADIO | 0x03 ,				 /**< No Antenna error (Since 2.4) */
+	RADIO_ERROR_NO_ANTENNA			= TIZEN_ERROR_RADIO | 0x03 ,				 /**< No Antenna error (Since @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif) */
 	RADIO_ERROR_PERMISSION_DENIED   = TIZEN_ERROR_PERMISSION_DENIED,			/**< Permission denied */
 	RADIO_ERROR_NOT_SUPPORTED   = TIZEN_ERROR_NOT_SUPPORTED,					/**< Not supported */
 } radio_error_e;
